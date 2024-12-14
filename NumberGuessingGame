@@ -1,0 +1,57 @@
+import java.util.Scanner;
+import java.util.Random;
+
+public class NumberGuessingGame {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        Random random = new Random();
+        boolean playAgain = true;
+        int totalScore = 0;
+        
+        System.out.println("Welcome to the Number Guessing Game!");
+
+        while (playAgain) {
+            int lowerBound = 1;
+            int upperBound = 100;
+            int randomNumber = random.nextInt(upperBound - lowerBound + 1) + lowerBound;
+            int maxAttempts = 10;
+            int attempts = 0;
+            boolean numberGuessed = false;
+            
+            System.out.println("\nA random number between " + lowerBound + " and " + upperBound + " has been generated.");
+            System.out.println("You have a maximum of " + maxAttempts + " attempts to guess the number.");
+            
+            while (attempts < maxAttempts) {
+                System.out.print("Enter your guess: ");
+                int userGuess = scanner.nextInt();
+                attempts++;
+                
+                if (userGuess == randomNumber) {
+                    System.out.println("Congratulations! You guessed the number correctly in " + attempts + " attempts.");
+                    totalScore += (maxAttempts - attempts + 1); 
+                    numberGuessed = true;
+                    break;
+                } else if (userGuess < randomNumber) {
+                    System.out.println("Your guess is too low. Try again.");
+                } else {
+                    System.out.println("Your guess is too high. Try again.");
+                }
+            }
+            
+            if (!numberGuessed) {
+                System.out.println("Sorry! You've used all " + maxAttempts + " attempts. The number was: " + randomNumber);
+            }
+            
+            System.out.println("Your current score is: " + totalScore);
+            
+            System.out.print("Do you want to play again? (yes/no): ");
+            String response = scanner.next();
+            if (!response.equalsIgnoreCase("yes")) {
+                playAgain = false;
+            }
+        }
+        
+        System.out.println("Thank you for playing! Your final score is: " + totalScore);
+        scanner.close();
+    }
+}
